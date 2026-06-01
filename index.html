@@ -33,12 +33,15 @@
           <div class="hero__actions"><a class="button button--primary" href="#model">모델 보기</a><a class="button button--ghost" href="#performance">성능 근거 보기</a></div>
         </div>
       </section>
-      <section class="section two-col" id="why" aria-labelledby="why-title">
-        <div class="section__copy"><p class="eyebrow">Why multimodal</p><h2 id="why-title" class="scroll-focus">리뷰엔 글만 있는 게 아닙니다</h2><p>온라인 쇼핑 리뷰에는 글과 사진이 함께 담깁니다. 옷과 전자제품은 특히 색감, 디자인, 실물 느낌 같은 시각 정보가 구매 판단에 큰 영향을 줍니다.</p><p>VITAL-Rec은 텍스트와 이미지를 함께 읽어 사용자가 매길 별점을 더 안정적으로 예측하는 것을 목표로 합니다.</p></div>
-        <div class="signal-board scroll-focus" data-motion="visual" aria-label="텍스트 신호와 이미지 신호를 함께 읽어 별점 예측으로 연결하는 멀티모달 흐름">
-          <article class="signal-card signal-card--text"><span>Text signal</span><strong>“색감은 좋은데 실제 착용감은 작아요.”</strong><p>감성, 사이즈, 사용 맥락처럼 글에 드러나는 판단 근거를 읽습니다.</p></article>
-          <article class="signal-card signal-card--image"><span>Image signal</span><strong>사진 속 색감 · 형태 · 실물 질감</strong><p>제품 사진과 리뷰 이미지에서 텍스트가 놓친 시각 단서를 보완합니다.</p></article>
-          <div class="signal-join"><span>Gated fusion</span><strong>샘플마다 중요한 모달을 다르게 반영</strong></div>
+      <section class="section" id="why" aria-labelledby="why-title">
+        <div class="section__header"><p class="eyebrow">Why multimodal</p><h2 id="why-title" class="scroll-focus">리뷰엔 글만 있는 게 아닙니다</h2><p>온라인 쇼핑 리뷰에는 글과 사진이 함께 담깁니다. 옷과 전자제품은 특히 색감, 디자인, 실물 느낌 같은 시각 정보가 구매 판단에 큰 영향을 줍니다.</p><p>VITAL-Rec은 텍스트와 이미지를 함께 읽어 사용자가 매길 별점을 더 안정적으로 예측하는 것을 목표로 합니다.</p></div>
+        <div class="explain-grid explain-grid--review">
+          <figure class="visual-frame scroll-focus" data-motion="visual"><img src="assets/review-card.webp" alt="별점·리뷰 글·제품 사진이 함께 담긴 리뷰 예시" loading="lazy" /></figure>
+          <div class="signal-board scroll-focus" data-motion="visual" aria-label="텍스트 신호와 이미지 신호를 함께 읽어 별점 예측으로 연결하는 멀티모달 흐름">
+            <article class="signal-card signal-card--text"><span>Text signal</span><strong>“색감은 좋은데 실제 착용감은 작아요.”</strong><p>감성, 사이즈, 사용 맥락처럼 글에 드러나는 판단 근거를 읽습니다.</p></article>
+            <article class="signal-card signal-card--image"><span>Image signal</span><strong>사진 속 색감 · 형태 · 실물 질감</strong><p>제품 사진과 리뷰 이미지에서 텍스트가 놓친 시각 단서를 보완합니다.</p></article>
+            <div class="signal-join"><span>Gated fusion</span><strong>샘플마다 중요한 모달을 다르게 반영</strong></div>
+          </div>
         </div>
       </section>
       <section class="section section--surface" id="model" aria-labelledby="model-title">
@@ -48,6 +51,10 @@
           <figcaption>입력별 projection → gated fusion → ID-conditioned tower → cross-tower interaction → rating head로 이어지는 전체 VITAL-Rec 구조입니다.</figcaption>
         </figure>
         <details class="detail-card"><summary>기술 더보기</summary><p>텍스트는 RoBERTa-base, 이미지는 ViT-base로 의미 표현을 추출합니다. 두 타워 표현은 원소곱, 절대차, ID 기반 협업 신호로 결합한 뒤 residual MLP와 선형 회귀 헤드를 거쳐 별점을 예측합니다.</p></details>
+      </section>
+      <section class="section two-col" id="fusion" aria-labelledby="fusion-title">
+        <div class="section__copy"><p class="eyebrow">Gated modal fusion</p><h2 id="fusion-title" class="scroll-focus">글이 중요한 리뷰, 사진이 중요한 리뷰</h2><p>단순히 평균을 내거나 이어붙이는 대신, VITAL-Rec은 샘플마다 텍스트와 이미지의 비중을 학습합니다.</p><div class="formula" aria-label="게이트 융합 수식"><code>gate = σ(W·[text ; image])</code><code>fused = gate ⊙ text + (1 − gate) ⊙ image</code></div></div>
+        <figure class="visual-frame visual-frame--gradient media-card--wide scroll-focus" data-motion="visual"><img src="assets/gate-mechanism.webp" alt="텍스트와 이미지의 비중을 저울처럼 조절하는 게이트 융합" loading="lazy" /></figure>
       </section>
       <section class="section tech-section" id="tech" aria-labelledby="tech-title">
         <div class="section__header"><p class="eyebrow">Applied stack</p><h2 id="tech-title" class="scroll-focus">주요 적용 기술 및 구조</h2><p>모델 학습 환경부터 사전학습 인코더, 데이터 통합 방식, 추천 아키텍처까지 전시에서 바로 확인할 수 있도록 정리했습니다.</p></div>
@@ -59,10 +66,6 @@
           <article class="tech-card"><span>Dataset</span><h3>데이터셋 통합</h3><p>Amazon Reviews 2023 카테고리 데이터(Subscription Boxes 등)에서 리뷰 텍스트, 리뷰 이미지, 상품 메타 정보를 통합했습니다.</p></article>
           <article class="tech-card"><span>Architecture</span><h3>모델 구조</h3><p>Two-Tower(User / Item), Gated Multimodal Fusion, ID-Multimodal Context Gating, Residual Block, Product·Abs Diff·ID Dot 상호작용 융합 레이어</p></article>
         </div>
-      </section>
-      <section class="section two-col" id="fusion" aria-labelledby="fusion-title">
-        <div class="section__copy"><p class="eyebrow">Gated modal fusion</p><h2 id="fusion-title" class="scroll-focus">글이 중요한 리뷰, 사진이 중요한 리뷰</h2><p>단순히 평균을 내거나 이어붙이는 대신, VITAL-Rec은 샘플마다 텍스트와 이미지의 비중을 학습합니다.</p><div class="formula" aria-label="게이트 융합 수식"><code>gate = σ(W·[text ; image])</code><code>fused = gate ⊙ text + (1 − gate) ⊙ image</code></div></div>
-        <figure class="media-card media-card--wide scroll-focus" data-motion="visual"><img src="assets/concept-gate.webp" alt="청록 텍스트 신호와 보라 이미지 신호가 중앙에서 융합되는 게이트 시각화" loading="lazy" /></figure>
       </section>
       <section class="section section--data" id="performance" aria-labelledby="performance-title"><div class="section__header"><p class="eyebrow">Performance</p><h2 id="performance-title" class="scroll-focus">기존 최강 모델보다 더 정확하게</h2><p>실제 아마존 의류·전자제품 데이터에서 VITAL-Rec은 가장 강한 기존 멀티모달 모델보다 오차를 더 낮췄습니다. 낮을수록 좋습니다.</p></div><div class="chart-grid" id="baselineCharts" aria-live="polite"></div></section>
       <section class="section section--data" id="ablation" aria-labelledby="ablation-title"><div class="section__header"><p class="eyebrow">Ablation Study</p><h2 id="ablation-title" class="scroll-focus">각 요소가 정말 필요한지 확인했습니다</h2><p>이미지를 빼거나 융합 방식을 단순화하면 오차가 커집니다. 즉 사진을 함께 쓰는 것과 똑똑하게 합치는 게이트 융합이 모두 중요합니다.</p></div><div class="chart-grid" id="ablationCharts" aria-live="polite"></div></section>

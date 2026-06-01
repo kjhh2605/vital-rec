@@ -1,71 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1230" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1180" viewBox="0 0 1600 1180" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
   <title id="title">VITAL-Rec model architecture</title>
-  <desc id="desc">User tower and item tower process IDs, review text, images, and item description through projections, gated fusion, ID-conditioned towers, cross-tower interaction, residual blocks, and a rating head.</desc>
+  <desc id="desc">Balanced VITAL-Rec architecture diagram showing user and item towers, modality projections, gated fusion, ID-conditioned towers, cross-tower interaction, residual blocks, and predicted rating.</desc>
   <defs>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
-      <path d="M0 0 L8 4.5 L0 9 Z" fill="#c8c8bf"/>
-    </marker>
-    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="5" result="blur"/>
-      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.1 0 0 0 0 0.9 0 0 0 0 0.75 0 0 0 .24 0"/>
-      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1.5 2.5 L10 6 L1.5 9.5 Z" fill="#cbc9bf"/></marker>
+    <linearGradient id="halo" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#2dd4bf" stop-opacity=".24"/><stop offset="1" stop-color="#a78bfa" stop-opacity=".22"/></linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="16" result="b"/><feColorMatrix in="b" type="matrix" values="0 0 0 0 0.12 0 0 0 0 0.8 0 0 0 0 0.72 0 0 0 .18 0"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <style>
-      .bg{fill:#050606}.user{fill:#075642;stroke:#35d6b7}.item{fill:#40358d;stroke:#a59bff}.shared{fill:#43433f;stroke:#b9b9af}.wire{fill:none;stroke:#bdbdb4;stroke-width:3;marker-end:url(#arrow)}.wire-soft{fill:none;stroke:#8f8f87;stroke-width:3}.label{fill:#e7e5dc;font:700 27px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.sub{fill:#bdb9f4;font:500 22px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.usub{fill:#72d9bf}.ssub{fill:#c8c8bf}.tiny{fill:#e0ded3;font:700 18px ui-monospace,SFMono-Regular,Consolas,monospace}.legend{fill:#e7e5dc;font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.box{rx:14;ry:14;stroke-width:2}.small{font-size:24px}.mid{font-size:25px}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+      .bg{fill:#050606}.panel{fill:url(#halo);opacity:.9}.user{fill:#075642;stroke:#35d6b7}.item{fill:#40358d;stroke:#aaa0ff}.shared{fill:#41413d;stroke:#c2c2b8}.box{rx:16;ry:16;stroke-width:2}.wire{fill:none;stroke:#cbc9bf;stroke-width:3;marker-end:url(#arrow)}.wire-merge{fill:none;stroke:#cbc9bf;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.wire-soft{fill:none;stroke:#8c8b83;stroke-width:3}.merge-dot{fill:#cbc9bf;stroke:#050606;stroke-width:3}.legend{fill:#e9e7df;font:700 24px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.label{fill:#f1efe8;font:800 26px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.sub{fill:#c5c0ff;font:600 21px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.usub{fill:#7ae0c5}.ssub{fill:#d0cec6}.tiny{fill:#e4e1d7;font:700 18px ui-monospace,SFMono-Regular,Consolas,monospace}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.cap{fill:#a9aaa6;font:700 18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.08em}.small{font-size:22px}.mid{font-size:24px}.formula{font-size:20px}
     </style>
   </defs>
-  <rect class="bg" width="1280" height="1230" rx="28"/>
-  <g opacity=".28" filter="url(#softGlow)"><path d="M95 775 C320 615 405 318 610 420 C777 503 847 222 1180 135" stroke="#2dd4bf" stroke-width="2" fill="none"/><path d="M260 210 C487 332 573 712 819 620 C961 566 1031 712 1194 608" stroke="#a78bfa" stroke-width="2" fill="none"/></g>
 
-  <g transform="translate(300 38)"><rect x="0" y="0" width="22" height="22" rx="5" fill="#0b5d48" stroke="#47dcc4" stroke-width="2"/><text class="legend" x="36" y="20">User tower</text></g>
-  <g transform="translate(545 38)"><rect x="0" y="0" width="22" height="22" rx="5" fill="#493f9a" stroke="#aaa0ff" stroke-width="2"/><text class="legend" x="36" y="20">Item tower</text></g>
-  <g transform="translate(790 38)"><rect x="0" y="0" width="22" height="22" rx="5" fill="#444440" stroke="#c6c6bc" stroke-width="2"/><text class="legend" x="36" y="20">Shared / merge</text></g>
+  <rect class="bg" width="1600" height="1180" rx="30"/>
+  <rect class="panel" x="44" y="40" width="1512" height="1098" rx="34" filter="url(#glow)"/>
+
+  <g transform="translate(445 58)"><rect x="0" y="0" width="24" height="24" rx="6" fill="#0b5d48" stroke="#47dcc4" stroke-width="2"/><text class="legend" x="38" y="22">User tower</text></g>
+  <g transform="translate(682 58)"><rect x="0" y="0" width="24" height="24" rx="6" fill="#493f9a" stroke="#aaa0ff" stroke-width="2"/><text class="legend" x="38" y="22">Item tower</text></g>
+  <g transform="translate(915 58)"><rect x="0" y="0" width="24" height="24" rx="6" fill="#454540" stroke="#c6c6bc" stroke-width="2"/><text class="legend" x="38" y="22">Shared / merge</text></g>
 
   <!-- Inputs -->
-  <g>
-    <rect class="box user" x="90" y="95" width="170" height="88"/><text class="label" x="175" y="145" text-anchor="middle">User ID</text>
-    <rect class="box user" x="280" y="95" width="170" height="88"/><text class="label" x="365" y="132" text-anchor="middle">Review</text><text class="sub usub" x="365" y="163" text-anchor="middle">RoBERTa</text>
-    <rect class="box user" x="470" y="95" width="170" height="88"/><text class="label" x="555" y="132" text-anchor="middle">Image</text><text class="sub usub" x="555" y="163" text-anchor="middle">ViT</text>
-    <rect class="box item" x="720" y="95" width="170" height="88"/><text class="label" x="805" y="132" text-anchor="middle">Image</text><text class="sub" x="805" y="163" text-anchor="middle">ViT</text>
-    <rect class="box item" x="910" y="95" width="170" height="88"/><text class="label" x="995" y="132" text-anchor="middle">Desc</text><text class="sub" x="995" y="163" text-anchor="middle">RoBERTa</text>
-    <rect class="box item" x="1100" y="95" width="170" height="88"/><text class="label" x="1185" y="145" text-anchor="middle">Item ID</text>
-  </g>
+  <rect class="box user" x="105" y="120" width="170" height="78"/><text class="label" x="190" y="168" text-anchor="middle">User ID</text>
+  <rect class="box user" x="310" y="120" width="180" height="78"/><text class="label" x="400" y="154" text-anchor="middle">Review</text><text class="sub usub" x="400" y="181" text-anchor="middle">RoBERTa</text>
+  <rect class="box user" x="525" y="120" width="180" height="78"/><text class="label" x="615" y="154" text-anchor="middle">Image</text><text class="sub usub" x="615" y="181" text-anchor="middle">ViT</text>
 
-  <path class="wire" d="M175 183 V238"/><path class="wire" d="M365 183 V238"/><path class="wire" d="M555 183 V238"/>
-  <path class="wire" d="M805 183 V238"/><path class="wire" d="M995 183 V238"/><path class="wire" d="M1185 183 V238"/>
+  <rect class="box item" x="895" y="120" width="180" height="78"/><text class="label" x="985" y="154" text-anchor="middle">Image</text><text class="sub" x="985" y="181" text-anchor="middle">ViT</text>
+  <rect class="box item" x="1110" y="120" width="180" height="78"/><text class="label" x="1200" y="154" text-anchor="middle">Desc</text><text class="sub" x="1200" y="181" text-anchor="middle">RoBERTa</text>
+  <rect class="box item" x="1325" y="120" width="180" height="78"/><text class="label" x="1415" y="168" text-anchor="middle">Item ID</text>
+
+  <path class="wire" d="M190 198 V242"/><path class="wire" d="M400 198 V242"/><path class="wire" d="M615 198 V242"/>
+  <path class="wire" d="M985 198 V242"/><path class="wire" d="M1200 198 V242"/><path class="wire" d="M1415 198 V242"/>
 
   <!-- Projection -->
-  <rect class="box user" x="85" y="242" width="170" height="88"/><text class="label mid" x="170" y="284" text-anchor="middle">ID proj.</text><text class="sub usub" x="170" y="315" text-anchor="middle">Dense+LN</text>
-  <rect class="box user" x="285" y="242" width="365" height="88"/><text class="label mid" x="467" y="284" text-anchor="middle">Modality projection</text><text class="sub usub" x="467" y="315" text-anchor="middle">LN→Dense→LN→act</text>
-  <rect class="box item" x="715" y="242" width="365" height="88"/><text class="label mid" x="897" y="284" text-anchor="middle">Modality projection</text><text class="sub" x="897" y="315" text-anchor="middle">LN→Dense→LN→act</text>
-  <rect class="box item" x="1110" y="242" width="160" height="88"/><text class="label mid" x="1190" y="284" text-anchor="middle">ID proj.</text><text class="sub" x="1190" y="315" text-anchor="middle">Dense+LN</text>
+  <rect class="box user" x="110" y="242" width="170" height="86"/><text class="label mid" x="195" y="281" text-anchor="middle">ID proj.</text><text class="sub usub" x="195" y="310" text-anchor="middle">Dense + LN</text>
+  <rect class="box user" x="330" y="242" width="375" height="86"/><text class="label mid" x="517" y="281" text-anchor="middle">Modality projection</text><text class="sub usub" x="517" y="310" text-anchor="middle">LN → Dense → LN → act</text>
+  <rect class="box item" x="895" y="242" width="375" height="86"/><text class="label mid" x="1082" y="281" text-anchor="middle">Modality projection</text><text class="sub" x="1082" y="310" text-anchor="middle">LN → Dense → LN → act</text>
+  <rect class="box item" x="1325" y="242" width="170" height="86"/><text class="label mid" x="1410" y="281" text-anchor="middle">ID proj.</text><text class="sub" x="1410" y="310" text-anchor="middle">Dense + LN</text>
 
-  <path class="wire" d="M467 330 V385"/><path class="wire" d="M897 330 V385"/>
+  <path class="wire" d="M517 328 V382"/><path class="wire" d="M1082 328 V382"/>
 
   <!-- Gated fusion -->
-  <rect class="box user" x="285" y="388" width="365" height="88"/><text class="label mid" x="467" y="431" text-anchor="middle">Gated fusion</text><text class="sub usub" x="467" y="461" text-anchor="middle">per-dim sigmoid gate</text>
-  <rect class="box item" x="715" y="388" width="365" height="88"/><text class="label mid" x="897" y="431" text-anchor="middle">Gated fusion</text><text class="sub" x="897" y="461" text-anchor="middle">per-dim sigmoid gate</text>
-  <path class="wire" d="M467 476 V535"/><path class="wire" d="M897 476 V535"/>
+  <rect class="box user" x="330" y="382" width="375" height="86"/><text class="label mid" x="517" y="421" text-anchor="middle">Gated fusion</text><text class="sub usub" x="517" y="450" text-anchor="middle">per-dim sigmoid gate</text>
+  <rect class="box item" x="895" y="382" width="375" height="86"/><text class="label mid" x="1082" y="421" text-anchor="middle">Gated fusion</text><text class="sub" x="1082" y="450" text-anchor="middle">per-dim sigmoid gate</text>
 
-  <!-- ID conditioned towers -->
-  <rect class="box user" x="175" y="535" width="475" height="112"/><text class="label mid" x="412" y="591" text-anchor="middle">ID-conditioned tower</text><text class="sub usub" x="412" y="624" text-anchor="middle">[id; mm; id⊙mm] → res. MLP</text>
-  <rect class="box item" x="715" y="535" width="475" height="112"/><text class="label mid" x="952" y="591" text-anchor="middle">ID-conditioned tower</text><text class="sub" x="952" y="624" text-anchor="middle">[id; mm; id⊙mm] → res. MLP</text>
-  <path class="wire" d="M170 330 V527 H238"/><path class="wire" d="M1190 330 V527 H1126"/>
-  <path class="wire" d="M412 647 V706"/><path class="wire" d="M952 647 V706"/>
+  <path class="wire" d="M517 468 V530"/><path class="wire" d="M1082 468 V530"/>
 
-  <!-- Representation -->
-  <rect class="box user" x="258" y="707" width="310" height="86"/><text class="label mid" x="413" y="750" text-anchor="middle">User tower</text><text class="sub usub" x="413" y="781" text-anchor="middle">representation</text>
-  <rect class="box item" x="798" y="707" width="310" height="86"/><text class="label mid" x="953" y="750" text-anchor="middle">Item tower</text><text class="sub" x="953" y="781" text-anchor="middle">representation</text>
-  <path class="wire" d="M413 793 V862 H645"/><path class="wire" d="M953 793 V862 H725"/>
+  <!-- ID-conditioned towers -->
+  <rect class="box user" x="220" y="530" width="560" height="112"/><text class="label mid" x="500" y="585" text-anchor="middle">ID-conditioned tower</text><text class="sub usub" x="500" y="616" text-anchor="middle">[id; mm; id⊙mm] → residual MLP</text>
+  <rect class="box item" x="820" y="530" width="560" height="112"/><text class="label mid" x="1100" y="585" text-anchor="middle">ID-conditioned tower</text><text class="sub" x="1100" y="616" text-anchor="middle">[id; mm; id⊙mm] → residual MLP</text>
+  <path class="wire" d="M195 328 V586 H220"/>
+  <path class="wire" d="M1410 328 V586 H1380"/>
 
-  <!-- Side ID wires -->
-  <path class="wire-soft" d="M100 330 V876 H210"/><path class="wire" d="M100 330 V876 H210"/><text class="tiny" x="108" y="854">id_proj</text>
-  <path class="wire-soft" d="M1260 330 V876 H1148"/><path class="wire" d="M1260 330 V876 H1148"/><text class="tiny" x="1050" y="854">id_proj</text>
+  <path class="wire" d="M500 642 V700"/><path class="wire" d="M1100 642 V700"/>
+
+  <!-- Tower representations -->
+  <rect class="box user" x="330" y="700" width="340" height="84"/><text class="label mid" x="500" y="740" text-anchor="middle">User tower</text><text class="sub usub" x="500" y="770" text-anchor="middle">representation</text>
+  <rect class="box item" x="930" y="700" width="340" height="84"/><text class="label mid" x="1100" y="740" text-anchor="middle">Item tower</text><text class="sub" x="1100" y="770" text-anchor="middle">representation</text>
+
+  <text class="tiny" x="245" y="804">id_proj</text>
+  <text class="tiny" x="1282" y="804">id_proj</text>
+  <path class="wire-merge" d="M195 328 V812"/>
+  <path class="wire-merge" d="M500 784 V812"/>
+  <path class="wire-merge" d="M1100 784 V812"/>
+  <path class="wire-merge" d="M1410 328 V812"/>
+  <path class="wire-merge" d="M195 812 H1410"/>
+  <circle class="merge-dot" cx="800" cy="812" r="5"/>
 
   <!-- Merge and head -->
-  <rect class="box shared" x="215" y="850" width="930" height="96"/><text class="label mid" x="680" y="900" text-anchor="middle">Cross-tower interaction</text><text class="sub ssub mono" x="680" y="930" text-anchor="middle">concat: u · i · u⊙i · |u−i| · id⊙id · id·id</text>
-  <path class="wire" d="M680 946 V992"/>
-  <rect class="box shared" x="420" y="992" width="520" height="92"/><text class="label mid" x="680" y="1044" text-anchor="middle">Residual blocks + rating head</text><text class="sub ssub mono" x="680" y="1075" text-anchor="middle">fusion_dims [128,64] → linear</text>
-  <path class="wire" d="M680 1084 V1132"/>
-  <rect class="box shared" x="540" y="1132" width="280" height="78"/><text class="label mid" x="680" y="1180" text-anchor="middle">Predicted rating</text>
+  <rect class="box shared" x="260" y="838" width="1080" height="94"/><text class="label mid" x="800" y="886" text-anchor="middle">Cross-tower interaction</text><text class="sub ssub mono formula" x="800" y="916" text-anchor="middle">concat: u · i · u⊙i · |u−i| · id⊙id · id·id</text>
+  <path class="wire" d="M800 812 V838"/>
+  <path class="wire" d="M800 932 V972"/>
+  <rect class="box shared" x="475" y="972" width="650" height="82"/><text class="label mid" x="800" y="1016" text-anchor="middle">Residual blocks + rating head</text><text class="sub ssub mono formula" x="800" y="1044" text-anchor="middle">fusion_dims [128, 64] → linear</text>
+  <path class="wire" d="M800 1054 V1088"/>
+  <rect class="box shared" x="600" y="1088" width="400" height="56"/><text class="label small" x="800" y="1124" text-anchor="middle">Predicted rating</text>
 </svg>
