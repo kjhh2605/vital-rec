@@ -18,7 +18,7 @@ function renderCharts(targetId, groups) {
 function renderTeam() {
   const target = document.getElementById("teamGrid");
   if (!target) return;
-  target.innerHTML = siteData.team.map((member, index) => `<article class="team-card"><span class="avatar" aria-hidden="true">T${index + 1}</span><h3>${member.name}</h3><p>${member.role}</p><a href="${member.github}" aria-label="${member.name} GitHub 링크">GitHub</a></article>`).join("");
+  target.innerHTML = siteData.team.map((member, index) => `<article class="team-card"><span class="avatar" aria-hidden="true">${member.name.slice(0, 1)}</span><h3>${member.name}</h3><p class="team-role">${member.role}</p><p class="team-bio">${member.bio}</p><a href="${member.github}" aria-label="${member.name} GitHub 링크 준비 중">GitHub 준비 중</a></article>`).join("");
 }
 function setupScrollFocus() {
   if (prefersReduced || window.matchMedia("(max-width: 860px)").matches) return;
