@@ -74,7 +74,7 @@
       <section class="section section--surface" id="encoders" aria-labelledby="encoders-title">
         <div class="section__header">
           <p class="eyebrow">Feature extraction</p>
-          <h2 id="encoders-title" class="scroll-focus">사전학습 AI가 리뷰를 ‘숫자 언어’로 바꿉니다</h2>
+          <h2 id="encoders-title" class="scroll-focus">사전학습 AI가 리뷰를 <br>‘숫자 언어’로 바꿉니다</h2>
           <p>원시 리뷰 글과 이미지를 그대로 신경망에 넣지 않습니다. 대규모 코퍼스로 이미 학습된 트랜스포머 인코더가 의미를 뽑아 주고, VITAL-Rec은 그 표현 위에서 별점을 학습합니다.</p>
         </div>
         <div class="pipeline-grid">
@@ -103,7 +103,7 @@
         </div>
       </section>
       <section class="section section--surface" id="model" aria-labelledby="model-title">
-        <div class="section__header"><p class="eyebrow">Model structure</p><h2 id="model-title" class="scroll-focus">사용자와 상품, 두 관점을 같은 구조로</h2><p>추출된 RoBERTa·ViT 벡터와 사용자·상품 ID를 <strong>Two-Tower 멀티모달 AI 추천 모델</strong>에 넣습니다. 사용자 타워는 리뷰 관점, 상품 타워는 메타·이미지 관점으로 같은 구조를 공유합니다.</p></div>
+        <div class="section__header"><p class="eyebrow">Model structure</p><h2 id="model-title" class="scroll-focus">사용자와 상품, 두 관점을 <br>같은 구조로</h2><p>추출된 RoBERTa·ViT 벡터와 사용자·상품 ID를 <strong>Two-Tower 멀티모달 AI 추천 모델</strong>에 넣습니다. 사용자 타워는 리뷰 관점, 상품 타워는 메타·이미지 관점으로 같은 구조를 공유합니다.</p></div>
         <figure class="architecture-card scroll-focus" data-motion="visual">
           <img src="assets/model-architecture.svg" alt="VITAL-Rec 모델 아키텍처: 사용자 타워와 상품 타워가 텍스트, 이미지, ID 표현을 투영하고 게이트 융합, ID-conditioned tower, cross-tower interaction, residual rating head를 거쳐 별점을 예측하는 흐름" loading="lazy" />
           <figcaption>입력별 projection → gated fusion → ID-conditioned tower → cross-tower interaction → rating head로 이어지는 전체 VITAL-Rec 구조입니다.</figcaption>
@@ -111,7 +111,7 @@
         <details class="detail-card"><summary>기술 더보기</summary><p>각 타워에서 RoBERTa·ViT 768차원 표현을 공유 잠재공간으로 투영한 뒤 <strong>게이트 융합</strong>으로 결합하고, ID 임베딩과 곱해 문맥화합니다. 사용자·상품 타워는 원소곱·절대차·ID 내적 등 다층 상호작용을 거친 후 residual MLP와 선형 회귀 헤드가 <strong>1~5점 별점</strong>을 출력합니다. TensorFlow로 학습하고, 인코더 추출만 PyTorch·Hugging Face를 사용합니다.</p></details>
       </section>
       <section class="section two-col" id="fusion" aria-labelledby="fusion-title">
-        <div class="section__copy"><p class="eyebrow">Gated modal fusion</p><h2 id="fusion-title" class="scroll-focus">글이 중요한 리뷰, 사진이 중요한 리뷰</h2><p>단순히 평균을 내거나 이어붙이는 대신, VITAL-Rec은 샘플마다 텍스트와 이미지의 비중을 학습합니다.</p><div class="formula" aria-label="게이트 융합 수식"><code>gate = σ(W·[text ; image])</code><code>fused = gate ⊙ text + (1 − gate) ⊙ image</code></div></div>
+        <div class="section__copy"><p class="eyebrow">Gated modal fusion</p><h2 id="fusion-title" class="scroll-focus">글이 중요한 리뷰, <br>사진이 중요한 리뷰</h2><p>단순히 평균을 내거나 이어붙이는 대신, VITAL-Rec은 샘플마다 텍스트와 이미지의 비중을 학습합니다.</p><div class="formula" aria-label="게이트 융합 수식"><code>gate = σ(W·[text ; image])</code><code>fused = gate ⊙ text + (1 − gate) ⊙ image</code></div></div>
         <figure class="visual-frame visual-frame--gradient media-card--wide scroll-focus" data-motion="visual"><img src="assets/gate-mechanism.webp" alt="텍스트와 이미지의 비중을 저울처럼 조절하는 게이트 융합" loading="lazy" /></figure>
       </section>
       <section class="section tech-section" id="tech" aria-labelledby="tech-title">
@@ -126,7 +126,7 @@
         </div>
       </section>
       <section class="section section--data" id="performance" aria-labelledby="performance-title"><div class="section__header"><p class="eyebrow">Performance</p><h2 id="performance-title" class="scroll-focus">기존 최강 모델보다 더 정확하게</h2><p>실제 아마존 의류·전자제품 데이터에서 VITAL-Rec은 가장 강한 기존 멀티모달 모델보다 오차를 더 낮췄습니다. 낮을수록 좋습니다.</p></div><div class="chart-grid" id="baselineCharts" aria-live="polite"></div></section>
-      <section class="section section--data" id="ablation" aria-labelledby="ablation-title"><div class="section__header"><p class="eyebrow">Ablation Study</p><h2 id="ablation-title" class="scroll-focus">각 요소가 정말 필요한지 확인했습니다</h2><p>이미지를 빼거나 융합 방식을 단순화하면 오차가 커집니다. 즉 사진을 함께 쓰는 것과 똑똑하게 합치는 게이트 융합이 모두 중요합니다.</p></div><div class="chart-grid" id="ablationCharts" aria-live="polite"></div></section>
+      <section class="section section--data" id="ablation" aria-labelledby="ablation-title"><div class="section__header"><p class="eyebrow">Ablation Study</p><h2 id="ablation-title" class="scroll-focus">각 요소가 정말 필요한지 <br>확인했습니다</h2><p>이미지를 빼거나 융합 방식을 단순화하면 오차가 커집니다. 즉 사진을 함께 쓰는 것과 똑똑하게 합치는 게이트 융합이 모두 중요합니다.</p></div><div class="chart-grid" id="ablationCharts" aria-live="polite"></div></section>
       <section class="section" id="team" aria-labelledby="team-title"><div class="section__header"><p class="eyebrow">Team</p><h2 id="team-title" class="scroll-focus">팀 소개</h2><p>역할별로 프로젝트 총괄, 모델 설계, 실험, 데이터 분석과 결과 시각화를 나누어 진행했습니다.</p></div><div class="team-grid" id="teamGrid"></div></section>
     </main>
     <footer class="footer"><div><strong>VITAL-Rec</strong><p>Vision-Image-Text Aligned Latent Recommender</p><p class="footer__meta">2026 Capstone Exhibition · <a href="https://github.com/2026-bigdata-capstone/VITAL-Rec" target="_blank" rel="noopener noreferrer" aria-label="VITAL-Rec 프로젝트 GitHub 저장소">GitHub</a></p></div><a class="button button--ghost" href="#main">처음으로</a></footer>
